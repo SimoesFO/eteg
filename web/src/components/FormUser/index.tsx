@@ -1,18 +1,22 @@
 'use client'
 import { revalidateUsers } from '@/app/actions/revalidate-users'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { FloppyDisk, XCircle } from '@phosphor-icons/react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { Button } from '../Button'
-import { useGlobalContext } from '../../context/UserProvider'
 import { toast } from 'react-toastify'
+import { z } from 'zod'
+import { useGlobalContext } from '../../context/UserProvider'
+import { Button } from '../Button'
 
 const saveUserFormSchema = z.object({
   name: z.string()
     .nonempty('Nome Obrigatório'),
   cpf: z.string()
     .nonempty('CPF Obrigatório')
-    .length(11, { message: 'CPF inválido' }),
+    .length(14, { message: 'CPF inválido' })
+    .transform((value) => {
+      return value.replace(/\D/g, '')
+    }),
   email: z.string()
     .nonempty('Email Obrigatório')
     .email('E-mail inválido'),
@@ -31,6 +35,7 @@ export default function FormUser () {
     register,
     handleSubmit,
     resetField,
+    setValue,
     formState: { errors }
   } = useForm<UserFormData>({
     resolver: zodResolver(saveUserFormSchema)
@@ -74,6 +79,13 @@ export default function FormUser () {
     resetField('notes')
   }
 
+  function formatCPF (event: any) {
+    const cpfCleaned = event.target.value.replace(/\D/g, '')
+    const cpfFormated = cpfCleaned.replace(/^([\d]{3})([\d]{3})([\d]{3})([\d]{2})$/, '$1.$2.$3-$4')
+    setValue('cpf', cpfFormated)
+    return cpfCleaned
+  }
+
   return (
     <>
     {showForm &&
@@ -104,8 +116,9 @@ export default function FormUser () {
           <input
             type='text'
             placeholder='CPF'
+            maxLength={14}
             className='px-2 py-1 rounded-md border border-zinc-100 shadow'
-            {...register('cpf')} />
+            {...register('cpf', { onChange: (e) => { formatCPF(e) } })} />
           {errors.cpf && <span className='text-sm text-red-700 font-semibold px-2'>* {errors.cpf.message}</span>}
         </div>
 
@@ -141,10 +154,12 @@ export default function FormUser () {
 
         <div className='flex justify-end gap-8'>
           <Button.Root onClick={closeForm} className='bg-red-800 hover:bg-red-700'>
+            <Button.Icon icon={XCircle} />
             Fechar
           </Button.Root>
 
           <Button.Root type='submit'>
+            <Button.Icon icon={FloppyDisk} />
             Salvar
           </Button.Root>
         </div>

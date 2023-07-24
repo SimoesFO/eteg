@@ -1,7 +1,7 @@
 'use client'
 import { revalidateUsers } from '@/app/actions/revalidate-users'
 import { Button } from '@/components/Button'
-import { PaintBucket } from '@phosphor-icons/react'
+import { PaintBucket, UserMinus } from '@phosphor-icons/react'
 import { toast } from 'react-toastify'
 
 interface UserProps {
@@ -14,6 +14,8 @@ interface UserProps {
 }
 
 export default function TopicUser ({ id, name, cpf, email, color, notes }: UserProps) {
+  const cpfFormated = cpf.replace(/^([\d]{3})([\d]{3})([\d]{3})([\d]{2})$/, '$1.$2.$3-$4')
+
   async function deleteUser (id: string) {
     const response = await fetch(`http://localhost:3000/api/users/${id}`, {
       method: 'DELETE'
@@ -42,7 +44,7 @@ export default function TopicUser ({ id, name, cpf, email, color, notes }: UserP
 
       <div className='flex flex-col w-1/4'>
         <span className='text-md font-bold'>{ name }</span>
-        <span className='text-sm'>{ cpf }</span>
+        <span className='text-sm'>{ cpfFormated }</span>
         <span className='text-sm'>{ email }</span>
       </div>
 
@@ -50,6 +52,7 @@ export default function TopicUser ({ id, name, cpf, email, color, notes }: UserP
 
       <div>
         <Button.Root onClick={async () => await deleteUser(id)} className='bg-red-800 hover:bg-red-700'>
+          <Button.Icon icon={UserMinus} />
           Excluir
         </Button.Root>
       </div>
