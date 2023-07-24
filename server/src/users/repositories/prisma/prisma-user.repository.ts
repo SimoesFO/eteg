@@ -34,7 +34,7 @@ export class PrismaUserRepository implements UserRepository {
       const { cpf, email } = data;
       const user = await this.prisma.user.findFirst({
         where: {
-          OR: [{ cpf }, { email }],
+          AND: [{ deleted: false }, { OR: [{ cpf }, { email }] }],
         },
       });
 

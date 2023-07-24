@@ -47,6 +47,23 @@ export default function FormUser () {
       body: JSON.stringify(data)
     })
 
+    const user = await response.json()
+    if (user?.statusCode) {
+      toast.error(`🫤 ${user?.message as string}!`, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        icon: false
+      })
+
+      return
+    }
+
     clearForm()
 
     await revalidateUsers()
@@ -63,7 +80,7 @@ export default function FormUser () {
       icon: false
     })
 
-    return await response.json()
+    return user
   }
 
   function closeForm () {
