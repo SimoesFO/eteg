@@ -2,6 +2,15 @@
 
 Este projeto foi criado por Felipe O. Simões, como parte do processo seletivo da Eteg. Technology. Trata-se de um sistema de cadastro de usuário onde é realizada a criação de um ou mais usuários, solicitando as informações de nome, cpf, email, cor preferida e comentário, e após isso realizar a listagem dos usuários criado.
 
+<div align='center'>
+ <img src='https://user-images.githubusercontent.com/6942893/255610488-60736839-bd60-4e5b-8cf1-44eb87b7bd87.png' width='500px'  /><br />
+ <i>Home</i><br /><br />
+ <img src='https://user-images.githubusercontent.com/6942893/255610504-b4d13f54-4201-4eaa-9f4d-9a0aa445a624.png' width='500px'  /><br />
+ <i>Adicionar Usuário</i><br /><br />
+ <img src='https://user-images.githubusercontent.com/6942893/255610514-97b5b48e-62af-4c1b-8c43-f4183ac75571.png' width='500px'  /><br />
+ <i>Usuário Cadastrado</i><br /><br />
+</div>
+
 ## Tecnologias Utilizadas
 ### Back-End
 <ul>
