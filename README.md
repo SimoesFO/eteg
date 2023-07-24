@@ -42,7 +42,7 @@ Então para executar o projeto basta entrar em ambas as pastas (server e web) e 
 
 <p>
   <i>
-  &nbsp;&nbsp;&nbsp;&nbsp;# &nbsp;docker-compose up
+  &nbsp;&nbsp;&nbsp;&nbsp;# &nbsp;docker compose up
   </i>
 </p>
 
